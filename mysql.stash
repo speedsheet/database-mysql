@@ -1,0 +1,2181 @@
+# <#>MySql<> SpeedSheet
+<b>What you need, faster.<>
+
+
+<!>See also<v>...<> "MySql - Server Reference.rtf"<>
+
+<!>See also<v>...<> "MySql JDBC Driver - Summary.rtf"<>	<#>// under Java - Component help<>
+
+
+
+# Unsorted
+
+select host, db, user from db;
+select host, user, password from user;
+
+
+
+# Summary
+
+
+### Comments
+
+<cb><#># A one line comment.<><>
+
+<cb><#>-- Another one line comment<><>
+
+<cb><#>/* A multi line comment */<><>
+
+
+
+### Command Terminator
+
+<cb>;<>
+
+Can be changed(See: How To: Terminator - Change)
+
+
+
+### Case Sensitivity
+
+Table Names - OS dependent
+Tables are stored as files in the file system.
+
+
+Everything else - No.
+
+
+
+### Naming Conventions
+
+SQL:		UPPER_CASE	// Including variables.	
+Names:	lower_snake_case
+
+
+
+### Port - Default
+
+<cb>3306<>
+
+Using SSL:
+
+<cb>3307<>
+
+
+
+### Root User Id
+
+<cb>root<>
+
+<c>root<> is the default user id created by MySql.
+
+
+
+### Statement Evaluation Order
+
+<cb>FROM
+	WHERE
+		SELECT
+			GROUP BY
+				HAVING
+					ORDER BY
+						LIMIT<>
+
+<!>Make My Own:<>
+
+<image "MySql Evaluation Order.png">
+
+<!>From <l>https://www.mysqltutorial.org/mysql-group-by.aspx/<>
+
+
+
+# Programming Language Drivers
+@
+@ drivers-only, driver-only
+
+
+
+### Driver - Java JDBC
+
+Driver:
+
+<cb>com.mysql.jdbc.Driver<>
+
+Connection String:
+
+<cb>jdbc:mysql://<v>host<>:<v>port<>/<v>database<><>
+
+Connection Code:
+
+<cb><!>Type?<> <v>driver<> = Class.forName(com.mysql.jdbc.Driver).newInstance();
+<!>Type?<> connection = DriverManager.getConnection(<v>connectionString<>, <v>userName<>, <v>password<>);<>
+
+Imports:
+
+<cb><!>?<><>
+
+
+
+# Operators
+
+
+
+### Compare - Between
+
+<cb>= <v>value<> BETWEEN <v>min_value<> AND <v>max_value<><>
+
+<cb>= <v>column_1<> BETWEEN <v>min_value<> AND <v>max_value<><>
+
+
+Example:
+
+<cb>SELECT <v>1<> BETWEEN <v>1<> AND <v>3<>
+
+<#># Returns 1 (True)<><>
+
+
+
+### Compare - Not Between
+
+<cb>= <v>value<> NOT BETWEEN <v>min_value<> AND <v>max_value<><>
+
+<cb>= <v>column_1<> NOT BETWEEN <v>min_value<> AND <v>max_value<><>
+
+
+Example:
+
+<cb>SELECT <v>1<> BETWEEN <v>1<> AND <v>3<>
+
+<#># Returns 0 (False)<><>
+
+
+
+### Compare - In
+
+<cb>= <v>value<> IN (<v>value_1<>, <v>value_2<>, <v>...<>)<>
+
+<cb>= <v>value<> IN (SELECT <v>column_1<> WHERE <v>...<>)<>
+
+
+Example:
+
+<cb>SELECT <v>1<> IN (<v>1<>, <v>2<>, <v>3<>)
+
+<#># Returns 1 (True)<><>
+@
+@ list, set, select where
+
+
+
+### Compare - Not In
+
+<cb>= <v>value<> NOT IN (<v>value_1<>, <v>value_2<>, <v>...<>)<>
+
+<cb>= <v>value<> NOT IN (SELECT <v>column_1<> WHERE <v>...<>)<>
+
+
+Example:
+
+<cb>SELECT <v>1<> NOT IN (<v>1<>, <v>2<>, <v>3<>)
+
+<#># Returns 0 (False)<><>
+@
+@ list, set, select where
+
+
+
+# Data Types
+@ data-only, data-type-only, data-types-only, types-only, structures
+
+
+## Boolean
+
+
+### Boolean - BIT
+
+<cb>BIT<>
+
+<cb>!= 0		<#># True<>
+= 0			<#># False<><>
+
+
+<!>(Investigate):<>
+Prefer TINYINT ?
+<l>https://www.bennadel.com/blog/3845-why-i-use-tinyint-columns-instead-of-bit-columns-for-boolean-data-in-a-mysql-application.htm<>
+
+
+
+
+### Boolean - BOOL / BOOLEAN
+
+<cb>BOOL | BOOLEAN<>
+
+<cb>!= 0		<#># True<>
+= 0			<#># False<><>
+
+Synonym for <c>TINYINT(1)<>.
+
+
+
+## Blob
+
+Stores bytes(byte strings). Sorting and comparison is done on byte value.
+@
+@ blob-only, blobs-only
+
+
+	
+### Blob - TINYBLOB
+
+<cb>TINYBLOB<>
+
+
+
+### Blob - BLOB
+
+<cb>BLOB<>
+
+
+
+### Blob - MEDIUMBLOB
+
+<cb>MEDIUMBLOB<>
+
+
+
+### Blob - LONGBLOB
+
+<cb>LONGBLOB<>
+
+
+
+## Floats
+
+
+
+### Float - FLOAT
+
+<cb>FLOAT(<v>precision<>)<>
+
+<cb>FLOAT(<v>digits<>, <v>decimals<>)<>
+
+
+<c><v>precision<><>		0 .. 23
+
+<c><v>digits<><>			Digits Total
+<c><v>decimals<><>			Digits After The Decimal
+
+Size:			4 Bytes
+
+
+
+### Float - DOUBLE
+
+<cb>DOUBLE(<v>precision<>)<>
+
+<cb>DOUBLE(<v>digits<>, <v>decimals<>)<>
+
+
+<c><v>precision<><>		24 .. 53
+
+<c><v>digits<><>			Digits Total
+<c><v>decimals<><>			Digits After The Decimal
+
+Size:			8 Bytes
+
+
+
+### Float - DOUBLE PRECISION
+
+<cb>DOUBLE PRECISION(<v>digits<>, <v>decimals<>)<>
+
+<!>More Details Needed<>
+
+
+
+### Float - REAL DECIMAL
+
+<cb>REAL DECIMAL(<v>digits<>, <v>decimals<>)<>
+
+<!>More Details Needed<>
+
+
+
+### Float - NUMERIC
+
+<cb>NUMERIC(<v>digits<>, <v>decimals<>)<>
+
+<!>More Details Needed<>
+
+
+
+### Floats - For Money, Currency
+
+Use:
+
+<cb>NUMERIC(19,4)<>
+
+
+
+## Integers
+@
+@ Int-only, integer-only
+
+
+
+### Integer - TINYINT
+
+<cb>TINYINT<>
+
+<cb>TINYINT UNSIGNED<>
+
+Range, Signed:	-128 .. 127
+Range, Unsigned:	0 .. 255
+
+Size:			1 Byte
+
+
+
+### Integer - SMALLINT
+
+<cb>SMALLINT<>
+
+<cb>SMALLINT UNSIGNED<>
+
+Range, Signed:	-32,768 .. 32,767
+Range, Unsigned:	0 .. 65535
+
+Size:			2 Bytes
+
+
+
+### Integer - MEDIUMINT
+
+<cb>MEDIUMINT<>
+
+<cb>MEDIUMINT UNSIGNED<>
+
+Range, Signed:	-8,388,608 .. 8,388,607
+Range, Unsigned:	0 .. 16,777,215
+
+Size:			3 Bytes
+
+
+
+### Integer - INT / INTEGER
+
+<cb>INT | INTEGER<>
+
+<cb>INT UNSIGNED | INTEGER UNSIGNED<>
+
+Range, Signed:	-2,147,483,648 .. 2,147,483,647
+Range, Unsigned:	0 .. 4,294,967,295
+
+Size:			4 Bytes
+
+
+
+### Integer - BIGINT
+
+<cb>BIGINT<>
+
+<cb>BIGINT UNSIGNED<>
+
+Range, Signed:	-9,223,372,036,854,775,808 .. 9,223,372,036,854,775,807
+Range, Unsigned:	0 .. 18,446,744,073,709,551,615
+
+Size:			8 Bytes
+
+
+
+## Text
+
+Stores text that can be converted to/from character sets. Sorting and comparison is done on character set.
+@
+@ String, text-only, string-only, strings-only
+
+
+
+### Text - CHAR
+
+<cb>CHAR(<v>size<>)<>
+
+Fixed length string.
+
+Maximum Length:		255 Characters
+
+
+
+### Text - TINYTEXT
+
+<cb>TINYTEXT<>
+
+
+
+### Text - TEXT
+
+<cb>TEXT<>
+
+<= 65535 characters.
+Not ISO standard.
+Stored separately from the table.
+
+
+
+### Text - MEDIUMTEXT
+
+<cb>MEDIUMTEXT<>
+
+
+
+### Text - LONGTEXT
+
+<cb>LONGTEXT<>
+
+
+
+### Text - VARCHAR
+	
+<cb>VARCHAR(<v>size<>)<>
+
+Variable length string.
+
+Maximum Length:		65,535 Characters
+
+
+
+## Text - Operations
+@
+@ text-only, string-only, str-only
+
+
+### Text - Assign
+
+<cb>= '<v>string<>'<>
+
+
+### Text - Coalesce Null
+
+<cb> = COALESCE(<v>expression<>, <v>expression_2<>, <v>...<>)<>
+
+Returns the first non <c>NULL<> value from the list of expressions.
+
+May return a <c>NULL<> value if no match found.
+@
+@ is null, replace null
+
+
+
+### Text - Concatenate
+
+<cb>= CONCAT(<v>string_1<>, <v>string_2<>, <v>...<>)<>
+
+
+
+### Text - If Null
+
+<cb> = IFNULL(<v>expression<>, <v>value<>)<>
+
+Returns <c><v>value<><> when <c><v>expression<><> evaluates to null.
+Otherwise returns <c><v>expression<><>
+
+Must return non <c>NULL<> value.
+@
+@ ifnull, is null, replace null
+
+
+
+## Dates
+
+
+
+### Dates - DATE
+
+Type:
+
+<cb>DATE<>
+
+Range:
+
+<cb>1000-01-01 - 9999-12-31<>
+
+Create:
+
+<cb>= '<v>YYYY<>-<v>MM<>-<v>DD<>'<>
+
+Today:
+
+<cb>= CURDATE()<>
+@
+@ date(), curdate(), current date, today
+
+
+
+### Dates - DATE Operations
+
+
+#### Compare - Date String
+
+<cb><v>...<> WHERE date_1 = "<v>yyyy<>-<v>mm<>-<v>dd<>"<>
+
+<cb><v>...<> WHERE date_1 = "<v>yyyy<>/<v>mm<>/<v>dd<>"<>
+
+<cb><v>...<> WHERE date_1 = "<v>yyyy<>.<v>mm<>.<v>dd<>"<>
+
+
+
+<cb><v>...<> WHERE date_1 < "<v>yyyy<>-<v>mm<>-<v>dd<>"<>
+
+<cb><v>...<> WHERE date_1 > "<v>yyyy<>-<v>mm<>-<v>dd<>"<>
+@
+@ less than, greater than, \<, <=, >, >=
+
+
+
+#### Compare - To Today
+
+<cb><v>...<> WHERE <v>date_1<> = CURDATE()<>
+
+<cb><v>...<> WHERE <v>date_1<> > CURDATE()<>
+
+<cb><v>...<> WHERE <v>date_1<> >= CURDATE()<>
+
+
+
+#### Compare - Within Week
+
+<cb><v>...<> WHERE <v>date_1<> BETWEEN(CURDATE() - INTERVAL 1 WEEK) AND CURDATE()<>
+
+
+
+#### To - String
+
+<cb>DATE_FORMAT(<v>date_1<>,  "%Y-%m-%d")<>
+
+
+
+### Dates - DATETIME
+
+Type:
+
+<cb>DATETIME<>
+
+<cb>= '<v>YYYY<>-<v>MM<>-<v>DD<> <v>HH<>-<v>MM<>-<v>SS<>'<>
+
+Current Date Time:
+
+<cb>= NOW()<>
+
+
+Range:  1000-01-01 00:00:00 .. 9999-12-31 23:59:59
+
+
+Examples:
+
+<cb>INSERT INTO <v>table_1<>(<v>datetime_column<>) Values('<v>2001-01-10 01:02:03<>');<>
+
+<cb>SELECT * FROM <v>table_1<> WHERE <v>datetime_column<> >= '<v>2001-01-10 01:02:03<>';<>
+@
+@ datetime-only, today(), now(), current datetime, current date time,
+
+
+
+### Dates - DATETIME Operations
+@
+@ datetime-only
+
+
+
+#### DATETIME - Compare - To Date String
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) = '<v>YYYY<>-<v>MM<>-<v>DD<>'<>
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) > '<v>YYYY<>-<v>MM<>-<v>DD<>'<>
+
+
+
+#### DATETIME - Compare - To Date Time String
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) = '<v>YYYY<>-<v>MM<>-<v>DD<> <v>HH<>-<v>MM<>-<v>SS<>'<>
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) > '<v>YYYY<>-<v>MM<>-<v>DD<> <v>HH<>-<v>MM<>-<v>SS<>'<>
+
+
+
+#### DATETIME - Compare - To Past 24 Hours
+
+<cb><v>...<> WHERE <v>datetime_1<> >=(NOW() - INTERVAL 1 DAY)<>
+@
+@ Current Date time
+
+
+#### DATETIME - Compare - To Now
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) < NOW()<>
+@
+@ Current Date time
+
+
+#### DATETIME - Compare - To Today
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) = CURDATE()<>
+
+
+
+#### DATETIME - Compare - To Yesterday
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) =(CURDATE() - INTERVAL 1 DAY)<>
+
+
+
+#### DATETIME - Compare - To This Week
+
+<cb><v>...<> WHERE DATE(<v>datetime_1<>)(CURDATE() - INTERVAL 1 WEEK) AND CURDATE()<>
+
+
+#### DATETIME - Default - To Now
+<cb>CREATE TABLE <v>...<>
+	<v>datetime_1<> DEFAULT CURRENT_TIMESTAMP,
+	<v>...<><>
+@
+@ CURRENT_TIME_TAMP, Today, create table
+
+
+
+#### DATETIME - Difference
+
+<cb>= TIMESTAMPDIFF(<v>unit<>, <v>older_datetime<>, <v>newer_datetime<>)<>
+
+
+Returns: <c>int<>(in chosen unit).
+
+If <c><v>older_datetime<><> is before <c><v>newer_datetime<><>, returned value will be negative.
+
+
+Example:
+
+<cb>TIMESTAMPDIFF(MINUTE, <v>created_datetime<>, NOW())<>
+@
+@ timestampdiff()
+
+
+
+#### DATETIME - Difference In Days
+
+<cb>= DIFFTIME(<v>older_datetime<>, <v>newer_datetime<>)<>
+
+
+Returns: <c>int<>(in days).
+
+If <c><v>older_datetime<><> is before <c><v>newer_datetime<><>, returned value will be negative.
+@
+@ difftime()
+
+
+
+#### DATETIME - Add
+
+
+<cb>DATE_ADD(<v>datetime_1<>, INTERVAL <v>number<> <v>TIME_UNIT<>)<>
+
+
+Example:
+
+<cb>DATE_ADD(<v>created_timestamp<>, INTERVAL 30 SECOND)<>
+@
+@ date_add()
+
+
+
+#### DATETIME - Subtract
+
+
+<cb>DATE_SUB(<v>datetime_1<>, INTERVAL <v>number<> <v>TIME_UNIT<>)<>
+
+
+Example:
+
+<cb>DATE_SUB(NOW(), INTERVAL 4 HOUR)<>
+@
+@ date_sub(), minus
+
+
+
+#### DATETIME - To - Date
+
+<cb>DATE(<v>datetime_1<>)<>
+@
+@ from, get, value
+
+
+
+#### DATETIME - To - Int - Microsecond
+
+<cb>MICROSECOND(<v>datetime_1<>)<>
+@
+@ from, get, value, microsecond(), time unit, time_unit
+
+
+
+#### DATETIME - To - Int - Second
+
+<cb>SECOND(<v>datetime_1<>)<>
+@
+@ from, get, value, second(), time unit, time_unit
+
+
+
+#### DATETIME - To - Int - Minute
+
+<cb>MINUTE(<v>datetime_1<>)<>
+@
+@ from, get, value, minute(), time unit, time_unit
+
+
+
+#### DATETIME - To - Int - Hour
+
+<cb>HOUR(<v>datetime_1<>)<>
+@
+@ from, get, value, hour(), time unit, time_unit
+
+
+
+#### DATETIME - To - Int - Day
+
+<cb>DAY(<v>datetime_1<>)<>
+
+or
+
+<cb>DAYOFMONTH(<v>datetime_1<>)<>
+
+
+Returns day of month.
+@
+@ from, get, value, day(), dayofmonth(), time unit, time_unit
+
+
+
+#### DATETIME - To - Int - Day of Week
+
+<cb>DAYOFWEEK(<v>datetime_1<>)<>
+@
+@ from, get, value, dayofweek(), time unit, time_unit
+
+
+
+#### DATETIME - To - Int - Day of Year
+
+<cb>DAYOFYEAR(<v>datetime_1<>)<>
+
+
+Returns day of month.
+@
+@ from, get, value, time unit, time_unit, dayofyear()
+
+
+
+#### DATETIME - To - Int - Month
+
+<cb>MONTH(<v>datetime_1<>)<>
+@
+@ from, get, value, month()
+
+
+
+#### DATETIME - To - Int - Year
+
+<cb>YEAR(<v>datetime_1<>)<>
+@
+@ from, get, value, year()
+
+
+
+#### DATETIME - To - String
+
+<cb>DATE_FORMAT(<v>datetime_1<>, "<v>%Y-%m-%d %H:%M:%S<>")<>
+@
+@ from, get, value, date_format()
+
+
+
+#### DATETIME - To - String - Year-Month
+
+<cb>DATE_FORMAT(<v>datetime_1<>, "<v>%Y-%m<>")<>
+@
+@ from, get, value, year, month
+
+
+
+#### DATETIME - To - String - Weekday Name
+
+<cb>DAYNAME(<v>datetime_1<>)<>
+@
+@ from, get, value, dayname, day of week.
+
+
+
+#### DATETIME - To - String - Month Name
+
+<cb>MONTHNAME(<v>datetime_1<>)<>
+@
+@ from, get, value, monthname
+
+
+
+#### DATETIME - To - Time Zone
+
+<cb>CONVERT_TZ(<v>datetime_1<>, "<v>From_TimeZone<>", "<v>To_TimeZone<>")<>
+
+
+Example:
+
+<cb>CONVERT_TZ(<v>datetime_1<>, "UTC", "America/New_York")<>
+@
+@ from, get, value
+
+
+
+### Dates - TimeStamp
+
+<cb>TIMESTAMP<>
+
+<!>Sort Out<>
+
+Time in seconds (# of seconds from 1970-01-01, 00:00:00 UTC format.)
+1970-01-01 00:00:01 - 2038-01-09 03:14:07
+(Signed 32 bit)
+
+Note: Times stored in UTC timezone. MySql uses server timezone to do the conversion.
+
+
+
+### Dates - TIME
+
+<cb>TIME<>
+
+<!>Sort Out<>
+
+Time(HH:MI:SS format)
+-838:59:59 - 838:59:59
+
+
+### Dates - TIME Operations
+
+
+
+#### TIME - From DATETIME
+
+<cb>TIME(<v>datetime_1<>)<>
+
+
+
+### Dates - Year
+
+<cb>YEAR<>
+
+2 or 4 digit year
+70 - 69		// 2 digit range(1970 - 2069)
+1901 - 2155	// 4 digit range.
+
+
+
+### Dates - Interval Units
+@
+@ time_unit, time 
+
+
+#### Time Unit - Microsecond
+
+<cb>MICROSECOND<>
+
+<cb>INTERVAL <v>units<> MICROSECOND<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> MICROSECOND)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Second
+
+<cb>SECOND<>
+
+<cb>INTERVAL <v>units<> SECOND<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> SECOND)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Second Microsecond
+
+<cb>SECOND_MICROSECOND<>
+
+<cb>INTERVAL <v>units<> SECOND_MICROSECOND<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>units<> SECOND_MICROSECOND)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Minute
+
+<cb>MINUTE<>
+
+<cb>INTERVAL <v>units<> MINUTE<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> MINUTE)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Minute Second
+
+<cb>MINUTE_SECOND<>
+
+<cb>INTERVAL <v>units<> MINUTE_SECOND<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>units<> MINUTE_SECOND)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Hour
+
+<cb>HOUR<>
+
+<cb>INTERVAL <v>units<> HOUR<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> HOUR)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Day
+
+<cb>DAY<>
+
+<cb>INTERVAL <v>units<> DAY<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> DAY)
+
+<#># Returns 2001-01-01 00:00:00<><>
+
+
+
+#### Time Unit - Day Second
+
+<cb>DAY_SECOND<>
+
+<cb>INTERVAL <v>units<> DAY_SECOND<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>'1'<> DAY_SECOND)
+
+<#># Returns 2001-01-01 00:00:01<><>
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>'1 1 1 1'<> DAY_SECOND)
+
+<#># Returns 2001-01-02 01:01:01<><>
+
+
+
+#### Time Unit - Month
+
+<cb>MONTH<>
+
+<cb>INTERVAL <v>units<> MONTH<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> MONTH)
+
+<#># Returns 2001-02-01 00:00:00<><>
+
+
+
+#### Time Unit - Year
+
+<cb>YEAR<>
+
+<cb>INTERVAL <v>units<> YEAR<>
+
+
+Example:
+
+<cb>SELECT DATE_ADD('<v>2001-01-01 00:00:00<>', INTERVAL <v>1<> YEAR)
+
+<#># Returns 2002-01-01 00:00:00<><>
+
+
+
+## Enum
+
+<!>Need More Details<>
+
+
+
+## Set
+
+<!>Need More Details<>
+
+
+
+# Database - Access Management / Permissions
+
+
+
+### User - Create
+
+<cb>CREATE USER '<v>user_name<>'@'<v>user_host<>' IDENTIFIED BY '<v>password<>';<>
+
+(Old: CREATE USER userName PASSWORD newPassword;)
+
+
+
+### User - Delete
+
+<cb>DROP USER <v>user_name<>'@'<v>user_host<>';<>
+
+
+
+### User - Password - Change
+
+Preferred:
+
+<cb>ALTER USER '<v>user_name<>'@'<v>user_host<>' IDENTIFIED BY '<v>password<>';<>
+
+or
+
+<cb>SET PASSWORD [ FOR '<v>user_name<>'@'<v>user_host<>' ] = PASSWORD('<v>password<>'');<>
+
+or
+
+<cb>UPDATE MYSQL.USER SET PASSWORD = PASSWORD('<v>password<>') WHERE User = '<v>user_name<>';<>
+
+
+
+### User - Password - Change, Native
+
+<cb>ALTER USER '<v>user_name<>'@'<v>user_host<>' IDENTIFIED WITH mysql_native_password BY '<v>password<>';<>
+
+Uses native/original password hashing when creating and authonticating passwords.
+@
+@ original, alter user, IDENTIFIED WITH mysql_native_password BY
+
+
+
+### User - Permissions
+
+<cb>SHOW GRANTS FOR '<v>user_name<>'@'<v>user_host<>';<>
+
+
+
+### User - Permissions - All
+
+<cb>GRANT ALL ON <v>database_name<>.* TO '<v>user_name<>'@'<v>user_host<>';<>
+
+
+
+### User - Permissions - Read Only
+
+<cb>GRANT SELECT, SHOW VIEW ON *.* TO '<v>user_name<>'@'<v>user_host<>';
+FLUSH PRIVILEGES;
+
+GRANT SELECT, SHOW VIEW ON <v>database_name<>.* TO '<v>user_name<>'@'<v>user_host<>';
+FLUSH PRIVILEGES;<>
+
+
+
+### User - Permissions - Read Write
+
+<cb>GRANT SELECT, INSERT, UPDATE, DELETE, SHOW VIEW ON *.* TO '<v>user_name<>'@'<v>user_host<>';
+FLUSH PRIVILEGES;
+
+GRANT SELECT, INSERT, UPDATE, DELETE, SHOW VIEW ON <v>database_name<>.* TO '<v>user_name<>'@'<v>user_host<>';
+FLUSH PRIVILEGES;<>
+
+
+
+### User - Permissions - Table Create
+
+<cb>GRANT CREATE ON <v>database_name<>.* TO '<v>user_name<>'@'<v>user_host<>';<>
+
+
+
+### User - Permissions - Revoke
+
+<cb>REVOKE ALL PRIVILEGES, GRANT OPTION FROM '<v>user_name<>'@'<v>user_host<>';<>
+
+
+
+### User - User Host
+
+From Anywhere:
+
+<cb>%<>
+
+From Specific IP Address Only:
+
+<cb><v>ip_address<><>
+
+From localhost Only:
+
+<cb>localhost<>
+	
+<c>localhost<> - Opens local connection using unix socket / windows named pipe.
+@
+@ user_host
+
+
+
+### Users - View All
+
+<cb>SELECT host, user FROM mysql.user;<>
+@
+@ show, list
+
+
+
+# Database - DDL
+
+
+
+### Database - Create
+
+<cb>CREATE DATABASE <v>database_name<>;<>
+
+
+
+### Database - Create With Admin ID
+
+<cb>CREATE DATABASE <v>database_name<>;
+
+CREATE USER '<v>admin_name<>'@'localhost' IDENTIFIED BY '<v>admin_password<>';
+GRANT ALL ON <v>database_name<>.* to '<v>admin_name<>'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE USER '<v>admin_name<>'@'%' IDENTIFIED BY '<v>admin_password<>';
+GRANT ALL VIEW ON <v>database_name<>.* to '<v>admin_name<>'@'%';
+FLUSH PRIVILEGES;<>
+@
+@ account, user
+
+
+
+### Database - Delete
+
+<cb>DROP DATABASE <v>database_name<>;<>
+
+
+
+### Database - Use
+
+<cb>USE <v>database_name<>;<>
+
+
+
+### Database - Show Current
+
+<cb>SELECT DATABASE();<>
+
+
+
+### Databases - View All
+
+<cb>SHOW DATABASES;<>
+@
+@ show, list
+
+
+
+### Index - View
+
+<cb>SHOW INDEX FROM <v>table_name<>;<>
+
+
+
+### Index - Drop
+
+<cb>DROP INDEX <v>index_name<> ON <v>table_name<>;<>
+@
+@ Delete
+
+
+
+### Index - Create
+
+<cb>CREATE INDEX
+	<v>index_name<>
+ON
+	<v>table_name<>
+	(<v>column_1<>, <v>column_2<>, <v>...<>);<>
+
+
+
+### Index - Unique
+
+<cb>CREATE UNIQUE INDEX<v>...<><>
+
+
+
+### Table - Column - Add
+
+<cb>ALTER TABLE <v>table_name<>
+	ADD COLUMN <v>column_1<> <v>TYPE<> [ NOT NULL | NULL ],
+	ADD COLUMN <v>column_2<> <v>TYPE<>,
+	<v>...<><>
+@
+@ Create, Insert
+
+
+
+### Table - Column - Change Type
+
+<cb>ALTER TABLE <v>table_name<>
+	MODIFY <v>column_1<> <v>NEW_TYPE<> [ NOT NULL | NULL ],
+	MODIFY <v>column_2<> <v>NEW_TYPE<>,
+	<v>...<><>
+
+
+
+### Table - Column - Drop
+
+<cb>ALTER TABLE <v>table_name<>
+	DROP COLUMN <v>column_1<>,
+	DROP COLUMN <v>column_2<>,
+	<v>...<><>
+@
+@ Delete
+
+
+
+### Table - Column - Rename
+
+<cb>ALTER TABLE <v>table_name<>
+	CHANGE COLUMN <v>column_1<> <v>column_1_new<> <v>TYPE<> [ NOT NULL | NULL ],
+	CHANGE COLUMN <v>column_2<> <v>column_2_new<> <v>TYPE<>,
+	<v>...<><>
+
+
+
+### Table - Columns - View
+
+<cb>SHOW COLUMNS FROM <v>table_name<>;<>
+
+
+
+### Table - Create
+
+<cb>CREATE TABLE <v>table_name<>(
+	<v>id_column<> INTEGER [ AUTO_INCREMENT ] [ PRIMARY KEY ] [ NOT NULL | NULL ] [ DEFAULT <v>default_value<> ] [ ON UPDATE <v>update_default_value<> ]
+	<v>column_2<> <v>TYPE<>,
+	<v>column_3<> <v>TYPE<>,
+	<v>...<>
+);<>
+
+
+Note: Auto-populate
+- Must be primary key.
+- Use keyword Auto_Increment.
+
+Defaults:
+
+	NULL
+	CURRENT_TIMESTAMP
+
+
+
+### Table - Create, Copy Structure
+
+<cb>CREATE TABLE <v>new_table_name<> Like <v>existing_table_name<>;<>
+
+
+
+### Table - Create, Copy Structure + Data
+
+<cb>CREATE TABLE <v>table_name<> AS
+	SELECT
+		<v>...<><>
+
+Copies table, indexes, triggers, everything.
+@
+@ SELECT INTO, Copy Table
+
+
+
+### Table - Rename
+
+<cb>RENAME TABLE <v>table_name<> TO <v>new_table_name<>;<>
+
+
+
+### Table - Repair
+
+<cb>REPAIR TABLE <v>table_name<> QUICK;<>
+
+
+
+### Table - View
+
+<cb>DESCRIBE <v>table_name<>;<>
+
+<cb>DESC <v>table_name<>;<>
+@
+@ describe
+
+
+
+### Tables - View All
+
+<cb>SHOW TABLES;<>
+@
+@ show, list
+
+
+
+### Trigger - Create
+
+<cb>DELIMITER <v>$$<>
+
+CREATE TRIGGER <v>trigger_name<>
+	<v>trigger_condition<>
+BEGIN
+	<v>trigger_action<>;
+END<v>$$<>
+
+DELIMITER;<>
+
+
+<cb>CREATE TRIGGER <v>trigger_name<>
+	BEFORE | AFTER <v>action<> ON <v>table_name<> <v>trigger_condition<>
+	FOR EACH ROW
+BEGIN
+	Trigger <v>action<> <v>code...<>
+	NEW.<v>column_name<><v>...<>
+END<>
+
+
+<c><v>action<><>  <s>-<>  <c>INSERT<> <c>|<> <c>UPDATE<> <c>|<> <c>DELETE<>
+
+
+<c>DELIMITER<> is required to differentiate between the delimeter around the create statement and those in the trigger conditions and trigger actions.
+
+
+Example:
+
+<cb>DELIMITER <v>$$<>
+
+CREATE TRIGGER <v>table_2_update_after_insert<>
+	AFTER INSERT ON <v>table_1<>
+	FOR EACH ROW
+BEGIN
+	UPDATE <v>table_2<>
+	SET <v>column_1<> = new.<v>some_column_2<>
+	WHERE <v>match_column_3<> = new.<v>match_column_3<>;
+END$$<>
+
+
+
+### Trigger - Drop
+
+<cb>DROP TRIGGER <v>trigger_name<>;<>
+@
+@ Delete
+
+
+
+### Triggers - View
+
+<cb>SHOW TRIGGERS;<>
+
+<cb>SHOW TRIGGERS LIKE <v>search_pattern<>;<>
+
+<cb>SHOW TRIGGERS WHERE <v>search_condition<>;<>
+@
+@ show, list
+
+
+
+# Server
+
+
+
+### System Settings - Set
+
+<cb>Set Global <v>variable_1<> = <v>value<>;<>
+
+
+Example:
+
+<cb>Set Global <v>variable_2<> = <v>123<>;<>
+
+
+
+### System Settings - View
+
+<cb>SHOW VARIABLES;<>
+
+
+
+### Connections - Show
+
+<cb>SHOW FULL PROCESSLIST;<>
+
+
+
+### Connections - Free Up
+
+<cb>FLUSH HOSTS;<>
+@
+@ Clear
+
+
+
+### Status Variables - Show
+
+<c>SHOW STATUS LIKE <v>expression<>;<>
+
+
+Example:
+
+<c>SHOW STATUS LIKE '%conn%';<>
+
+
+
+# Performance Tuning
+
+<cb>EXPLAIN<>
+
+To see the execution processing on a statement, put <c>EXPLAIN<> in front of the query.
+
+<cb>EXPLAIN SELECT user.user_id, address_id FROM user, address WHERE user.user_id = address.user_id;<>
+@
+@ show plan, show execution
+
+
+
+# Sql
+@
+@ sql-only
+
+
+
+### Access Outside Database
+
+<cb>SELECT <v>...<> FROM <v>database_name<>.<v>table_name<> WHERE <v>...<><>
+
+
+
+### Delete From Table
+
+<cb>DELETE FROM <v>table_name<> WHERE <v>...<><>
+
+
+
+### Delete All / Truncate Table
+
+<cb>TRUNCATE <v>table_name<><>
+
+<cb>TRUNCATE TABLE <v>table_name<><>
+
+Requires:
+
+<cb>SET SQL_SAFE_UPDATES = 0;<>
+
+
+
+### Insert
+
+<cb>INSERT INTO
+	<v>target_table_name<>
+SELECT
+	<v>column_1<>, <v>column_2<>, <v>...<>
+FROM 
+	<v>source_table_name<>
+WHERE
+	<v>...<><>
+
+
+
+### Insert - Table To New Table
+
+<cb>INSERT INTO				
+	<v>target_table_name<>
+	(<v>column_1<>, <v>column_2<>, <v>...<>)
+SELECT
+	<v>column_1<>, <v>column_2<><v>...<>
+FROM 
+	<v>source_table_name<>
+WHERE
+	<v>...<><>
+
+
+Must name columns.
+
+
+
+### Select
+
+<cb>SELECT
+	<v>column_1<>,
+	<v>column_2<>,
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>...<><>
+@
+@ select-only
+
+
+
+<cb>SELECT
+	<v>column_1<>,
+	<v>column_2<>,
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>...<>
+GROUP BY
+	<v>...<>
+HAVING
+	<v>...<>
+ORDER BY
+	<v>...<>
+LIMIT
+	<v>...<><>
+@
+@ select-only
+
+
+
+### Select - Distinct
+
+<cb>SELECT DISTINCT
+	<v>column_1<>,
+	<v>column_2<>,
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>...<><>
+@
+@ select-only, unique
+
+
+
+### Select - From Embedded Select
+
+<cb>SELECT
+	<v>...<>
+FROM
+	(SELECT <v>...<>) AS <v>name<>
+	<v>...<><>
+
+
+<c><v>name<><> is required.
+Treat as if it were a normal table.
+@
+@ select-only
+
+
+
+### Select - From - Left / Outer Join
+
+<cb>SELECT
+	<v>...<>
+FROM
+	<v>outer_table<>
+		LEFT JOIN <v>inner_table<>
+		ON <v>outer_field<> = <v>inner_field<> <v>...<>
+	<v>...<><>
+
+
+All rows of <c><v>outer_table<><> will be returned.
+Will return any records of <c><v>inner_table<><> that match.
+If no <c><v>inner_table<><> row, returns <c>NULL<> for those columns.
+
+### Select - Group By
+
+<cb>SELECT
+	<v>...<>
+FROM
+	<v>table_name<>
+GROUP BY
+	<v>...<><>
+
+<cb>SELECT
+	<v>column_1<>,
+	<v>column_2<>,
+	<v>...<>,
+	<v>aggregation_function_1()<>,
+	<v>aggregation_function_2()<>,
+	<v>...<>,
+FROM
+	<v>table_name<>
+GROUP BY
+	<v>groupby_column_1<>,
+	<v>groupby_column_2<>,
+	<v>...<><>
+
+
+Example:
+
+<cb>SELECT
+	<v>state<>
+	<v>city<>,
+	<v>product<>,
+	<v>COUNT(*)<>
+FROM
+	<v>orders<>
+GROUP BY
+	<v>state<>
+	<v>city<>,
+	<v>product<>
+ORDER BY
+	<v>state<>
+	<v>city<>,
+	<v>product<><>
+@
+@ select-only, aggregate, aggergation
+
+
+
+### Select - Group By - Count
+
+<cb>SELECT COUNT(*) FROM <v>table_name<> WHERE<v>...<><>
+
+No spaces in <c>COUNT()<> function.
+@
+@ select-only, count()
+
+
+
+### Select - Group By - Count Distinct
+
+<cb>SELECT
+	COUNT(DISTINCT(<v>column_name<>)))
+FROM
+	<v>table_name<>
+WHERE
+	<v>...<><>
+@
+@ select-only, count(), distinct
+
+
+
+### Select - Order By
+
+<cb>SELECT
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>...<>
+ORDER BY
+	<v>column_1<>,
+	<v>column_2<> DESC,
+	<v>...<><>
+
+
+Sets the order of returned results.
+<c>DESC<> reverses the order.
+@
+@ select-only
+
+
+
+### Select - Pagenated
+
+<cb>SELECT
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>...<>
+LIMIT <v>count<> OFFSET <v>starting_position<><>
+@
+@ pagenation, row count
+@ select-only
+
+
+
+### Select - Where In
+
+<cb>SELECT
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>column_1<> IN
+		(<v>value_1<>, <v>value_2<>, <v>...<>)<>
+
+<cb>SELECT
+	<v>...<>
+FROM
+	<v>table_name<>
+WHERE
+	<v>column_1<> IN
+		(SELECT <v>column_2<> FROM <v>...<>)<>
+
+
+
+### Update
+
+<cb>UPDATE
+	<v>table_name<>
+SET
+	<v>column_1<> = <v>value_1<>,
+	<v>column_2<> = <v>value_2<>
+WHERE
+	<v>...<><>
+
+
+
+### Update - From Second Table
+
+<cb>UPDATE
+	<v>table_1<> <v>t1<>,
+	<v>table_1<> <v>t2<>,
+SET
+	<v>t1<>.<v>column_1<> = <v>t2<>.<v>column_1<>,
+	<v>t1<>.<v>column_2<> = <v>t2<>.<v>column_2<>
+WHERE
+	<v>...<><>
+
+
+
+### Where Clause
+
+<cb>WHERE
+	<v>column_1<> = <v>value<><>
+
+<cb>WHERE
+	<v>column_1<> = <v>value_1<> AND
+	<v>column_2<> = <v>value_2<><>
+
+Implied <c>AND<>:
+
+<cb>WHERE
+	(<v>column_1<>, <v>column_2<>) =(<v>value_1<>, <v>value_2<>)<>
+
+
+
+# SQL - Stored Procedures
+
+
+### Stored Procedure - Call
+
+<cb>CALL <v>procedure_name<>(<v>in_param_1<>, <v>in_param_2<>);<>
+
+
+
+### Stored Procedure - Create
+
+<cb>DELIMITER <v>$$<>
+
+CREATE PROCEDURE <v>procedure_name<>(
+	IN <v>in_param_1<> <v>TYPE<>,
+	IN <v>in_param_2<> <v>TYPE<>,
+	OUT <v>result_1<> <v>TYPE<>
+)
+BEGIN
+	<v>...<>
+END <v>$$<>
+
+DELIMITER ;<>
+@
+@ new, define
+
+
+
+# Sql - Full Text Search
+
+
+### Notes
+
+Needs 3 or more records to work.
+Natual language search wouldn't work on words that show up 50% or more of the time.
+
+
+
+### Server Settings
+
+
+
+#### Settings
+
+<!>Fix This - what do these do exactly?<>
+
+ft_min_word_len	(Default 4)
+ft_max_word_len	(Default 84)
+
+Change either of these<v>...<>. then rebuild full text indexes.
+
+ft_stopword_file		List of words not to be indexed.
+
+
+
+#### Updates after setting changes<v>...<>
+
+<cb>REPAIR TABLE <v>table_1<> QUICK<>
+
+
+
+### Creating The Table, Index
+
+MyIsam tables only.
+
+<cb>CREATE TABLE <v>table_1<>(<v>column_1<>, <v>...<>) ENGINE = MyIsam<>
+
+<cb>CREATE FULLTEXT INDEX <v>index_1<> ON <v>table_1<>(<v>text_search_column_1<>, <v>...<>)<>
+
+
+
+### Searching
+
+
+#### Summary
+
+<cb>MATCH(<v>column_1<>, <v>column_2<>, <v>...<>) AGAINST(Expression <s>[<> SearchModifiers <s>]<> )<>
+
+
+
+#### Boolean Search - Operators
+
+And		<c>+<>
+Not		<c>-<>
+Or		(none, implied)
+
+
+Example:
+
+<cb>SELECT
+  *
+FROM
+  <v>table_name<>
+WHERE
+  MATCH(<v>column_1<>, <v>column_2<>) AGAINST('+<v>HasThisText<> -<v>NotThisText<>' In Boolean Mode);<>
+
+
+
+# Server Config
+
+[Mysqld]
+port=3307				Port Number
+basedir="C:/Development/Database/MySQL/MySql-05.05.15/"	DB Engine Base Directory
+datadir="D:\Dev\Databases\MySql.01\Data"
+
+general_log_file="D:\Dev\Databases\MySql.01\Log\logfile.log"	Log File
+log-error="D:\Dev\Databases\MySql.01\Log\logfile.log"	Error Log File
+pid-file="D:\Dev\Databases\MySql.01\Log\server.pid"	Process ID File
+innodb_log_group_home="D:\Dev\Databases\MySql.01\Log"	Log Directory
+
+
+
+# Sql Functions
+
+
+### String Length
+
+<cb>= LENGTH(<v>expression<>)<>
+@
+@ field, column, len(), length()
+
+
+
+# How To
+
+
+
+### Command Line - Connect
+
+<cb>mysql --host=<v>host_name<> --port=<v>port_number<> --user=<v>user_id<> --password=<v>password<><>
+@
+@ cli, interface
+
+
+
+### Column - Where is Null
+
+<cb><v>...<> WHERE <v>column_1<> IS NULL<>
+
+
+
+### Database - Size
+
+<cb>SELECT
+	table_schema "Database",
+	ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "Size(MB)" 
+FROM
+	information_schema.tables 
+GROUP BY
+	table_schema;<>
+
+
+Returns the size of the database in megabytes.
+@
+@ get, return, show
+
+
+
+### Dump - Load - Command Line
+
+<cb>mysql -h <v>host_name<> -u <v>user_name<> --password=<v>password<> <v>database_name<> \< <v>dump_file_path<><>
+
+<!>(untested)<>
+
+
+Effectively, you are executing the sql commands created by the original dump.
+
+
+
+### Dump - Load - MySql Console
+
+<cb>source <v>dump_file_path<><>
+
+No quotes required around <c><v>dump_file_path<><>.
+
+
+
+### Dump - Save - Command Line
+
+<cb>mysqldump -h <v>host_name<> -u <v>user_name<> --password=<v>password<> <v>database_name<> > <v>dump_filename<><>
+
+<!>(untested)<>
+
+
+
+### Foreign Key Constraints - Disable
+
+<cb>SET FOREIGN_KEY_CHECKS=0;<>
+
+
+
+### Foreign Key Constraints - Enable
+
+<cb>SET FOREIGN_KEY_CHECKS=1;<>
+
+
+
+### Server - Time Zone - View
+
+<cb>SELECT @@global.time_zone, @@session.time_zone, @@system_time_zone;<>
+@
+@ timezone, show, get
+
+
+
+### Server - Version
+
+<cb>SHOW VARIABLES LIKE "%version%";<>
+@
+@ Get, Show, Database
+
+
+
+### Set - Safe Update Mode - Off
+
+<cb>SET SQL_SAFE_UPDATES = 0;<>
+
+Allows commands like <v>TRUNCATE<> to run.
+
+
+
+### SQL - Execute From File
+
+<cb>mysql <v>...<> \< <v>sql_file<><>
+
+<cb>mysql -h <v>host_name<> -u <v>user_name<> --password=<v>password<> <v>database_name<> \< <v>sql_file<><>
+
+<!>(untested)<>
+
+
+
+### Terminator - Change
+
+<cb>DELIMITER <v>new_delimiter<><>
+
+Restore Default Delimiter:
+
+<cb>DELIMITER <v>;<><>
+
+
+Example:
+
+<cb>DELIMITER <v>$$<>;<>
+
+
+### Time Zones
+
+
+
+### Time Zone - Load - Mac
+
+1. Create <c>timezone.sql<>.
+2. Run <c>timezone.sql<>.
+
+
+Mac time zones are configured in '/usr/share/zoneinfo'.
+<c>mysql_tzinfo_to_sql<> is a command line utility in MySql bin.
+
+<!>Check this is accurate.<>
+
+
+
+#### 1. Create timezone.sql
+
+From Command Line:
+
+<cb><v>mysql_path<>/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo > timezone.sql<>
+
+
+#### 2. Run timezone.sql
+
+From MySql Console:
+
+<cb>USE mysql;
+
+source timezone.sql<>
+
+
+
+### Time Zone - Check
+
+<cb>SELECT * FROM TIME_ZONE_NAMES;<>
+
+	
+
+### Time Zone - Set
+
+<cb>SET time_zone = '<v>timezone<>';<>
+
+<cb>SET GLOBAL time_zone = '<v>timezone<>';<>
+
+
+Need to have time zones loaded into database.
+
+
+Example:
+
+<cb>SET time_zone = '+5:00';<>
+
+<cb>SET GLOBAL time_zone='UTC';<>
+
+<cb>SET GLOBAL time_zone='US/Eastern';<>
+
+
+
+### Table - Data - Write To File
+
+<cb>SELECT
+	<v>...<>
+INTO OUTFILE '<v>/path/export_file.csv<>'
+	FIELDS TERMINATED BY '<v>,<>'
+	ENCLOSED BY '<v>"<>'
+	LINES TERMINATED BY '<v>\n<>';<>
+@
+@ Export
+
+
+
+### Table - Data - Write To S3 Bucket
+
+<cb>SELECT
+	<v>...<>
+INTO OUTFILE S3 '<v>s3_bucket_path/file_name.csv<>'
+	FIELDS TERMINATED BY '<v>,<>'
+	ENCLOSED BY '<v>"<>'
+	LINES TERMINATED BY '<v>\n<>';<>
+
+Works on AWS Aurora DB only.(duh!)
+@
+@ Export
+
+
+
+# Troubleshooting
+
+
+### Error - <c>unknown variable 'mysqlx-bind-address=127.0.0.1'<>
+
+Caused by old <c>my.cnf<> file.
+
+
+Check for bad <c>my.cnf<> file here:
+
+	/etc
+	/etc/mysql
+	/usr/local/etc
+
+Rename
+
+	[mysqld]		-> 			[mysql]
+
+Or Remove Line
+
+	mysqlx-bind-address = 127.0.0.1
+
+
+
+# Glossary
+
+
+## Terms
+
+
+### Database Types
+InnoDB
+MyISAM
+
+
+### Database Type - InnoDB
+Has row-level locking, transactions, foreign key constraints, relationship constrains.
+
+
+### Database Type - MyISAM
+Has full table level locking only(no row level locking).
+Does NOT have the following: row-level locking, transactions, foreign key constraints, relationship constrains.
+
+
+### Schema
+Synonymous with Database.
+
+
+### User Host / userhost
+Defines where the user can connect from. There are 3 basic forms 'localhost', ip address, '%'. % allows access from anywhere.
+
+(User Access Locations)
+
