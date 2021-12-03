@@ -2,19 +2,6 @@
 <b>What you need, faster.<>
 
 
-<!>See also<v>...<> "MySql - Server Reference.rtf"<>
-
-<!>See also<v>...<> "MySql JDBC Driver - Summary.rtf"<>	<#>// under Java - Component help<>
-
-
-
-# Unsorted
-
-select host, db, user from db;
-select host, user, password from user;
-
-
-
 # Summary
 
 
@@ -2178,4 +2165,13 @@ Synonymous with Database.
 Defines where the user can connect from. There are 3 basic forms 'localhost', ip address, '%'. % allows access from anywhere.
 
 (User Access Locations)
+
+
+
+# Unsorted
+
+select host, db, user from db;
+select host, user, password from user;
+
+
 
