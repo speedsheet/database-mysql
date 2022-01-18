@@ -119,6 +119,8 @@ Example:
 <cb>SELECT <v>1<> BETWEEN <v>1<> AND <v>3<>
 
 <#># Returns 1 (True)<><>
+@
+@ where
 
 
 
@@ -134,6 +136,8 @@ Example:
 <cb>SELECT <v>1<> BETWEEN <v>1<> AND <v>3<>
 
 <#># Returns 0 (False)<><>
+@
+@ where
 
 
 
@@ -150,7 +154,7 @@ Example:
 
 <#># Returns 1 (True)<><>
 @
-@ list, set, select where
+@ list, set, where
 
 
 
@@ -167,7 +171,19 @@ Example:
 
 <#># Returns 0 (False)<><>
 @
-@ list, set, select where
+@ list, set, where
+
+
+
+### Compare - Regular Expression
+
+<cb><v>...<> WHERE <v>field<> REGEX '<v>regular_expression<>'<>
+
+Match Case Sensitive:
+
+<cb><v>...<> WHERE <v>field<> REGEX Binary '<v>regular_expression<>'<>
+@
+@ regex, binary, where
 
 
 
@@ -591,7 +607,7 @@ Examples:
 
 #### DATETIME - Compare - To Past 24 Hours
 
-<cb><v>...<> WHERE <v>datetime_1<> >=(NOW() - INTERVAL 1 DAY)<>
+<cb><v>...<> WHERE <v>datetime_1<> >= (NOW() - INTERVAL 1 DAY)<>
 @
 @ Current Date time
 
@@ -611,7 +627,7 @@ Examples:
 
 #### DATETIME - Compare - To Yesterday
 
-<cb><v>...<> WHERE DATE(<v>datetime_1<>) =(CURDATE() - INTERVAL 1 DAY)<>
+<cb><v>...<> WHERE DATE(<v>datetime_1<>) = (CURDATE() - INTERVAL 1 DAY)<>
 
 
 
@@ -1776,7 +1792,7 @@ WHERE
 Implied <c>AND<>:
 
 <cb>WHERE
-	(<v>column_1<>, <v>column_2<>) =(<v>value_1<>, <v>value_2<>)<>
+	(<v>column_1<>, <v>column_2<>) = (<v>value_1<>, <v>value_2<>)<>
 
 
 
