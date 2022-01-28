@@ -1,4 +1,4 @@
-# <#>MySql<> SpeedSheet
+# <#>MySQL<> SpeedSheet
 <b>Find what you need, faster.<>
 
 
@@ -181,7 +181,7 @@ Example:
 
 Match Case Sensitive:
 
-<cb><v>...<> WHERE <v>field<> REGEX Binary '<v>regular_expression<>'<>
+<cb><v>...<> WHERE <v>field<> REGEX BINARY '<v>regular_expression<>'<>
 @
 @ regex, binary, where
 
