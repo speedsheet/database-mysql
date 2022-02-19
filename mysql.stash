@@ -104,6 +104,8 @@ Imports:
 
 
 # Operators
+@
+@ where
 
 
 
@@ -457,6 +459,23 @@ Maximum Length:		65,535 Characters
 <cb>= '<v>string<>'<>
 
 
+
+### Text - Contains
+
+<cb>= <v>string_1<> LIKE '%<v>match<>%'<>
+
+<c>%<> is a wild card.
+
+
+Tests if <c>match<> is in <v>string_1<>.
+
+Can execute slowly.
+Will force a table scan.
+@
+@ LIKE, %
+
+
+
 ### Text - Coalesce Null
 
 <cb> = COALESCE(<v>expression<>, <v>expression_2<>, <v>...<>)<>
@@ -485,6 +504,24 @@ Otherwise returns <c><v>expression<><>
 Must return non <c>NULL<> value.
 @
 @ ifnull, is null, replace null
+@ where
+
+
+
+### Text - Starts With
+
+<cb>= <v>string_1<> LIKE '<v>start<>%'<>
+
+<c>%<> is a wild card.
+
+
+Tests if <c>string_1<> starts with <c>start<>.
+
+Can execute slowly.
+Will force a table scan.
+@
+@ LIKE, %
+@ where
 
 
 
@@ -511,10 +548,13 @@ Today:
 <cb>= CURDATE()<>
 @
 @ date(), curdate(), current date, today
+@ date-only, dates-only
 
 
 
 ### Dates - DATE Operations
+@
+@ date-only, dates-only
 
 
 #### Compare - Date String
@@ -527,11 +567,13 @@ Today:
 
 
 
-<cb><v>...<> WHERE date_1 < "<v>yyyy<>-<v>mm<>-<v>dd<>"<>
+<cb><v>...<> WHERE date_1 \< "<v>yyyy<>-<v>mm<>-<v>dd<>"<>
 
 <cb><v>...<> WHERE date_1 > "<v>yyyy<>-<v>mm<>-<v>dd<>"<>
 @
-@ less than, greater than, \<, <=, >, >=
+@ less than, greater than, \<, \<=, >, >=
+@ where
+@ yyyy-mm-dd, yyyy/mm/dd, yyyy.mm.dd
 
 
 
@@ -542,12 +584,19 @@ Today:
 <cb><v>...<> WHERE <v>date_1<> > CURDATE()<>
 
 <cb><v>...<> WHERE <v>date_1<> >= CURDATE()<>
+@
+@ =, >, >=, curdate()
+@ greater than, less than, or equal, now
+@ where
 
 
 
 #### Compare - Within Week
 
 <cb><v>...<> WHERE <v>date_1<> BETWEEN(CURDATE() - INTERVAL 1 WEEK) AND CURDATE()<>
+@
+@ between(), curdate(), interval, week
+@ where
 
 
 
